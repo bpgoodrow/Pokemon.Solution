@@ -58,15 +58,38 @@ namespace Pokedex.Controllers
       return await query.ToListAsync();
     }
 
-    [HttpGet("{id}")]
-    public async Task<ActionResult<Pokemon>> GetPokemon(int id)
+    // [HttpGet("{id}")]
+    // public async Task<ActionResult<Pokemon>> GetPokemon(int id)
+    // {
+    //   var pokemon = await _db.PokedexDatabase.FindAsync(id);
+    //   if (pokemon == null)
+    //   {
+    //       return NotFound();
+    //   }
+    //   return pokemon;
+    // }
+
+    [HttpGet("{page}")]
+    public async Task<ActionResult<List<Pokemon>>> GetPokedexDatabase(int page)
     {
-      var pokemon = await _db.PokedexDatabase.FindAsync(id);
-      if (pokemon == null)
+      if (_db.PokedexDatabase == null)
+        return NotFound();
+      
+      var pageResults = 3f;
+      var pageCount = Math.Ceiling(_db.PokedexDatabase.Count() / pageResults);
+
+      var pokedexDatabase = await _db.PokedexDatabase
+      .Skip((page - 1) * (int)pageResults)
+      .Take((int)pageResults)
+      .ToListAsync();
+
+      var response = new PokemonResponse
       {
-          return NotFound();
-      }
-      return pokemon;
+        PokedexDatabase = pokedexDatabase,
+        CurrentPage = page,
+        Pages = (int)pageCount
+      };
+      return Ok(response);
     }
 
      // PUT: api/Pokemon/5
@@ -104,15 +127,15 @@ namespace Pokedex.Controllers
       return _db.PokedexDatabase.Any(e => e.PokemonId == id);
     }
 
-      // POST: api/Pokemon
-    [HttpPost]
-    public async Task<ActionResult<Pokemon>> Post(Pokemon pokemon)
-    {
-      _db.PokedexDatabase.Add(pokemon);
-      await _db.SaveChangesAsync();
+    //   // POST: api/Pokemon
+    // [HttpPost]
+    // public async Task<ActionResult<Pokemon>> Post(Pokemon pokemon)
+    // {
+    //   _db.PokedexDatabase.Add(pokemon);
+    //   await _db.SaveChangesAsync();
 
-      return CreatedAtAction(nameof(GetPokemon), new { id = pokemon.PokemonId }, pokemon);
-    }
+    //   return CreatedAtAction(nameof(GetPokemon), new { id = pokemon.PokemonId }, pokemon);
+    // }
 
     // DELETE: api/Pokemon/5
     [HttpDelete("{id}")]
