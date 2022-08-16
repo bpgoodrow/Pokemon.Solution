@@ -1,12 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
+#nullable disable
+
 namespace Pokedex.Migrations
 {
     public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AlterDatabase()
+                .Annotation("MySql:CharSet", "utf8mb4");
+
             migrationBuilder.CreateTable(
                 name: "PokedexDatabase",
                 columns: table => new
@@ -14,17 +19,24 @@ namespace Pokedex.Migrations
                     PokemonId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     NationalPokedexNumber = table.Column<int>(type: "int", nullable: false),
-                    PokemonName = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true),
-                    PrimaryType = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true),
-                    SecondaryType = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true),
-                    EvolvesFrom = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true),
-                    EvolvesTo = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true),
-                    Details = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true)
+                    PokemonName = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    PrimaryType = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    SecondaryType = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    EvolvesFrom = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    EvolvesTo = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Details = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PokedexDatabase", x => x.PokemonId);
-                });
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.InsertData(
                 table: "PokedexDatabase",

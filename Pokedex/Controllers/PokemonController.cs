@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Pokedex.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Pokedex.Controllers
 {
+  [Authorize]
   [Route("api/[controller]")]
   [ApiController]
   public class PokemonController : ControllerBase
@@ -58,18 +60,18 @@ namespace Pokedex.Controllers
       return await query.ToListAsync();
     }
 
-    // [HttpGet("{id}")]
-    // public async Task<ActionResult<Pokemon>> GetPokemon(int id)
-    // {
-    //   var pokemon = await _db.PokedexDatabase.FindAsync(id);
-    //   if (pokemon == null)
-    //   {
-    //       return NotFound();
-    //   }
-    //   return pokemon;
-    // }
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Pokemon>> GetPokemon(int id)
+    {
+      var pokemon = await _db.PokedexDatabase.FindAsync(id);
+      if (pokemon == null)
+      {
+          return NotFound();
+      }
+      return pokemon;
+    }
 
-    [HttpGet("{page}")]
+    [HttpGet("page{page}")]
     public async Task<ActionResult<List<Pokemon>>> GetPokedexDatabase(int page)
     {
       if (_db.PokedexDatabase == null)

@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Pokedex.Models
 {
@@ -28,4 +29,4 @@ namespace Pokedex.Models
 
     public DbSet<Pokemon> PokedexDatabase { get; set; }
   }
-}
+} 

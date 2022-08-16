@@ -1,8 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
+#nullable disable
+
 namespace Pokedex.Migrations
 {
-    public partial class Pagination : Migration
+    public partial class Pokedex : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
