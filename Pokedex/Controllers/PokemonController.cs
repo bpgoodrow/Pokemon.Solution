@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Pokedex.Controllers
 {
-  [Authorize]
+  
   [Route("api/[controller]")]
   [ApiController]
   public class PokemonController : ControllerBase
@@ -129,15 +129,15 @@ namespace Pokedex.Controllers
       return _db.PokedexDatabase.Any(e => e.PokemonId == id);
     }
 
-    //   // POST: api/Pokemon
-    // [HttpPost]
-    // public async Task<ActionResult<Pokemon>> Post(Pokemon pokemon)
-    // {
-    //   _db.PokedexDatabase.Add(pokemon);
-    //   await _db.SaveChangesAsync();
+      // POST: api/Pokemon
+    [HttpPost]
+    public async Task<ActionResult<Pokemon>> Post(Pokemon pokemon)
+    {
+      _db.PokedexDatabase.Add(pokemon);
+      await _db.SaveChangesAsync();
 
-    //   return CreatedAtAction(nameof(GetPokemon), new { id = pokemon.PokemonId }, pokemon);
-    // }
+      return CreatedAtAction(nameof(GetPokemon), new { id = pokemon.PokemonId }, pokemon);
+    }
 
     // DELETE: api/Pokemon/5
     [HttpDelete("{id}")]
